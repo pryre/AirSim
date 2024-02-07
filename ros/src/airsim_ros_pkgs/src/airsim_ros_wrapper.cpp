@@ -105,7 +105,7 @@ void AirsimROSWrapper::initialize_ros()
     // nh_.getParam("max_horz_vel", max_horz_vel_)
 
     create_ros_pubs_from_settings_json();
-    airsim_control_update_timer_ = nh_private_.createTimer(ros::Duration(update_airsim_control_every_n_sec), &AirsimROSWrapper::drone_state_timer_cb, this);
+    airsim_control_update_timer_ = nh_private_.createWallTimer(ros::WallDuration(update_airsim_control_every_n_sec), &AirsimROSWrapper::drone_state_timer_cb, this);
 }
 
 // XmlRpc::XmlRpcValue can't be const in this case
@@ -316,7 +316,7 @@ void AirsimROSWrapper::create_ros_pubs_from_settings_json()
     reset_srvr_ = nh_private_.advertiseService("reset", &AirsimROSWrapper::reset_srv_cb, this);
 
     if (publish_clock_) {
-        clock_pub_ = nh_private_.advertise<rosgraph_msgs::Clock>("clock", 1);
+        clock_pub_ = nh_.advertise<rosgraph_msgs::Clock>("/clock", 1);
     }
 
     // if >0 cameras, add one more thread for img_request_timer_cb
@@ -944,7 +944,7 @@ msr::airlib::CarRpcLibClient* AirsimROSWrapper::get_car_client()
     return static_cast<msr::airlib::CarRpcLibClient*>(airsim_client_.get());
 }
 
-void AirsimROSWrapper::drone_state_timer_cb(const ros::TimerEvent& event)
+void AirsimROSWrapper::drone_state_timer_cb(const ros::WallTimerEvent& event)
 {
     try {
         // todo this is global origin
