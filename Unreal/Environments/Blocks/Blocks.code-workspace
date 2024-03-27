@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"name": "Blocks",
+			"path": "."
+		},
+		{
+			"name": "UE4",
+			"path": "/media/yao/17c1bbfa-4cdf-4d43-967a-a3e86f29a8e7/UnrealEngine"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off"
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp",
+			"vadimcn.vscode-lldb",
+			"ms-vscode.mono-debug"
+		]
+	}
+}
